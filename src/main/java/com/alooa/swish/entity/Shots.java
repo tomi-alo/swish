@@ -32,8 +32,7 @@ public class Shots {
 
     protected Shots() {}
 
-    public Shots(Long id, Category category, Location location, int shotsTaken, int shotsMade, String notes, Instant timestamp) {
-        this.id = id;
+    public Shots(Category category, Location location, int shotsTaken, int shotsMade, String notes, Instant timestamp) {
         this.category = category;
         this.location = location;
         this.shotsTaken = shotsTaken;

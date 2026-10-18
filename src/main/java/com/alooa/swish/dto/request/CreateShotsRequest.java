@@ -5,6 +5,8 @@ import com.alooa.swish.entity.Location;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.time.Instant;
+
 public record CreateShotsRequest(
         @NotNull(message = "Shot category cannot be null")
         Category category,
@@ -20,6 +22,7 @@ public record CreateShotsRequest(
         @Positive(message = "Shots made must be a positive number")
         int shotsMade,
 
-        String notes
+        String notes,
+        Instant timestamp
 ) {
 }
