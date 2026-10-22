@@ -7,8 +7,8 @@ import com.alooa.swish.entity.Shots;
 public class ShotsMapper {
     public Shots toEntity(CreateShotsRequest request) {
         return new Shots(
-                request.category(),
-                request.location(),
+                request.category(), // errors
+                request.location(), // errors
                 request.shotsTaken(),
                 request.shotsMade(),
                 request.notes(),

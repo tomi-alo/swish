@@ -2,6 +2,7 @@ package com.alooa.swish.dto.request;
 
 import com.alooa.swish.entity.Category;
 import com.alooa.swish.entity.Location;
+import com.alooa.validation.ValueOfEnum;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -9,10 +10,12 @@ import java.time.Instant;
 
 public record CreateShotsRequest(
         @NotNull(message = "Shot category cannot be null")
-        Category category,
+        @ValueOfEnum(enumClass = Category.class, message = "Invalid shot category")
+        String category,
 
         @NotNull(message = "Shot location cannot be null")
-        Location location,
+        @ValueOfEnum(enumClass = Location.class, message = "Invalid shot location")
+        String location,
 
         @NotNull(message = "Shots taken cannot be null")
         @Positive(message = "Shots taken must be a positive number")
