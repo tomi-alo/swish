@@ -1,6 +1,8 @@
 package com.alooa.swish.service;
 import com.alooa.swish.dto.request.CreateShotsRequest;
-import com.alooa.swish.entity.Shots;
+import com.alooa.swish.dto.request.UpdateShotsRequest;
+import com.alooa.swish.dto.response.ShotsResponse;
+import com.alooa.swish.model.Shots;
 import com.alooa.swish.mapper.ShotsMapper;
 import com.alooa.swish.repository.ShotsRepository;
 
@@ -15,26 +17,32 @@ public class ShotsServiceImpl implements ShotsService {
         this.shotsMapper = shotsMapper;
     }
     @Override
-    public List<Shots> findAll() {
-        return shotsRepository.findAll();
+    public List<ShotsResponse> findAll() {
+        return shotsRepository.findAll().stream().map(shotsMapper::toResponse).toList();
     }
 
     @Override
-    public Shots findById(Long id) {
+    public ShotsResponse findById(Long id) {
         return shotsRepository.findById(id).orElse(null);
     }
+
     @Override
-    public Shots createShots(CreateShotsRequest request) {
+    public ShotsResponse createShots(CreateShotsRequest request) {
         Shots shots = shotsMapper.toEntity(request);
-        return shotsRepository.save(shots);
     }
     @Override
     public void deleteById(Long id) {
         shotsRepository.deleteById(id);
     }
-//    @Override
-//    public Shots updateShots(Long id, UpdateShotsRequest request) {
-//        Shots shots = shotsMapper.toEntity(request);
-//        return shotsRepository.save(shots);
-//    }
+
+    @Override
+    public ShotsResponse updateShots(Long id, UpdateShotsRequest request) {
+        Shots shots = shotsRepository.findById(id).orElse(null);
+        if (shots == null) {
+            return null;
+        }
+        shotsMapper.updateEntity(request, shots);
+        Shots updatedShots = shotsRepository.save(shots);
+        return shotsMapper.toResponse(updatedShots);
+    }
 }

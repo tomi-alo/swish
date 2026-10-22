@@ -1,4 +1,4 @@
-package com.alooa.swish.entity;
+package com.alooa.swish.model;
 
 import jakarta.persistence.*;
 

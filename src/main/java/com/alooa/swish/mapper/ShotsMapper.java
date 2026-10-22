@@ -2,7 +2,7 @@ package com.alooa.swish.mapper;
 
 import com.alooa.swish.dto.request.CreateShotsRequest;
 import com.alooa.swish.dto.response.ShotsResponse;
-import com.alooa.swish.entity.Shots;
+import com.alooa.swish.model.Shots;
 
 public class ShotsMapper {
     public Shots toEntity(CreateShotsRequest request) {

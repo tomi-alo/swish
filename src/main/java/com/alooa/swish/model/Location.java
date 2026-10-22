@@ -1,4 +1,4 @@
-package com.alooa.swish.entity;
+package com.alooa.swish.model;
 
 public enum Location {
     LEFT_CORNER,

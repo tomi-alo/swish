@@ -1,7 +1,7 @@
 package com.alooa.swish.dto.response;
 
-import com.alooa.swish.entity.Category;
-import com.alooa.swish.entity.Location;
+import com.alooa.swish.model.Category;
+import com.alooa.swish.model.Location;
 
 import java.time.Instant;
 

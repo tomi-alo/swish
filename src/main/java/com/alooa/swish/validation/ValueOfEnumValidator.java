@@ -1,4 +1,4 @@
-package com.alooa.validation;
+package com.alooa.swish.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

@@ -1,31 +1,29 @@
 package com.alooa.swish.dto.request;
 
-import com.alooa.swish.entity.Category;
-import com.alooa.swish.entity.Location;
-import com.alooa.validation.ValueOfEnum;
-import jakarta.validation.Valid;
+import com.alooa.swish.model.Category;
+import com.alooa.swish.model.Location;
+import com.alooa.swish.validation.ValueOfEnum;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
 
 public record UpdateShotsRequest(
-        @NotNull(message = "Shot category cannot be null")
         @ValueOfEnum(enumClass = Category.class, message = "Invalid shot category")
         String category,
 
-        @NotNull(message = "Shot location cannot be null")
         @ValueOfEnum(enumClass = Location.class, message = "Invalid shot location")
         String location,
 
-        @NotNull(message = "Shots taken cannot be null")
-        @Positive(message = "Shots taken must be a positive number")
+        @Pattern(regexp = "^(1000|[1-9]\\d{0,2}|0)$\n", message = "Shots taken must be between 0 and 1000")
         int shotsTaken,
 
-        @NotNull(message = "Shots made cannot be null")
-        @Positive(message = "Shots made must be a positive number")
+        @Pattern(regexp = "^(1000|[1-9]\\d{0,2}|0)$\n", message = "Shots made must be between 0 and 1000")
         int shotsMade,
 
+        @Size(max = 255, message = "Notes must be at most 255 characters")
         String notes,
         Instant timestamp
 ) {
