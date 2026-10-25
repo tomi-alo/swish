@@ -1,5 +1,6 @@
 package com.alooa.swish.model;
 
+import com.alooa.swish.exception.InvalidShotsException;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -20,10 +21,10 @@ public class Shots {
     private Location location;
 
     @Column(nullable = false)
-    private int shotsTaken;
+    private Integer shotsTaken;
 
     @Column(nullable = false)
-    private int shotsMade;
+    private Integer shotsMade;
 
     @Column(length = 255)
     private String notes;
@@ -32,7 +33,7 @@ public class Shots {
 
     protected Shots() {}
 
-    public Shots(Category category, Location location, int shotsTaken, int shotsMade, String notes, Instant timestamp) {
+    public Shots(Category category, Location location, Integer shotsTaken, Integer shotsMade, String notes, Instant timestamp) {
         this.category = category;
         this.location = location;
         this.shotsTaken = shotsTaken;
@@ -65,19 +66,19 @@ public class Shots {
         this.location = location;
     }
 
-    public int getShotsTaken() {
+    public Integer getShotsTaken() {
         return shotsTaken;
     }
 
-    public void setShotsTaken(int shotsTaken) {
+    public void setShotsTaken(Integer shotsTaken) {
         this.shotsTaken = shotsTaken;
     }
 
-    public int getShotsMade() {
+    public Integer getShotsMade() {
         return shotsMade;
     }
 
-    public void setShotsMade(int shotsMade) {
+    public void setShotsMade(Integer shotsMade) {
         this.shotsMade = shotsMade;
     }
 
@@ -86,6 +87,29 @@ public class Shots {
             return 0.0;
         }
         return ((double) shotsMade / shotsTaken) * 100;
+    }
+
+    private record Thresholds(double excellent, double good) { }
+
+    private Thresholds thresholds(Category category) {
+        return switch (category) {
+            case FREE_THROW, LAYUP -> new Thresholds(80, 70);
+            case THREE -> new Thresholds(50, 35);
+            case MIDDY, DUNK -> new Thresholds(60, 40);
+        };
+    }
+
+    public String getAssessment() {
+        Thresholds thresholds = thresholds(category);
+        double percentage = getShootingPercentage();
+
+        if (percentage >= thresholds.excellent()) {
+            return "Excellent shooting performance!";
+        } else if (percentage >= thresholds.good()) {
+            return "Good shooting performance.";
+        } else {
+            return "Needs improvement, keep working.";
+        }
     }
 
     public Instant getTimestamp() {
@@ -102,5 +126,11 @@ public class Shots {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void CheckIfValid() {
+        if (shotsMade > shotsTaken) {
+            throw new InvalidShotsException("Shots made cannot be greater than shots taken");
+        }
     }
 }
