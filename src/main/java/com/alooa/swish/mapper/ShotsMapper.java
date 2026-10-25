@@ -6,6 +6,7 @@ import com.alooa.swish.model.Category;
 import com.alooa.swish.model.Location;
 import com.alooa.swish.model.Shots;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 public class ShotsMapper {
@@ -28,13 +29,14 @@ public class ShotsMapper {
     }
 
     public ShotsResponse toResponse(Shots shots) {
+        BigDecimal shootingPercentage = BigDecimal.valueOf(shots.getShootingPercentage()).setScale(2, BigDecimal.ROUND_HALF_UP);
         return new ShotsResponse(
                 shots.getId(),
                 shots.getCategory(),
                 shots.getLocation(),
                 shots.getShotsTaken(),
                 shots.getShotsMade(),
-                shots.getShootingPercentage(),
+                shootingPercentage,
                 shots.getAssessment(),
                 shots.getNotes(),
                 shots.getTimestamp()

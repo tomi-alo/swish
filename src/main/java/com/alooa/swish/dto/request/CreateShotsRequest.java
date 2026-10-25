@@ -4,7 +4,6 @@ import com.alooa.swish.model.Category;
 import com.alooa.swish.model.Location;
 import com.alooa.swish.validation.ValueOfEnum;
 import jakarta.validation.constraints.*;
-
 import java.time.Instant;
 
 public record CreateShotsRequest(

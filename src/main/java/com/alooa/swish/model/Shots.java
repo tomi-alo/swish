@@ -128,9 +128,17 @@ public class Shots {
         this.notes = notes;
     }
 
-    public void CheckIfValid() {
+    public void checkIfValid() {
+        if (shotsTaken <= 0){
+            throw new InvalidShotsException("Shots taken cannot be less than or equal to zero");
+        }
+
+        if (shotsMade < 0) {
+            throw new InvalidShotsException("Shots made cannot be less than zero");
+        }
         if (shotsMade > shotsTaken) {
             throw new InvalidShotsException("Shots made cannot be greater than shots taken");
         }
+
     }
 }
