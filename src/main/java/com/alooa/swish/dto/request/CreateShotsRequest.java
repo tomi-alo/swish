@@ -17,13 +17,16 @@ public record CreateShotsRequest(
         String location,
 
         @NotNull(message = "Shots taken cannot be null")
-        @Pattern(regexp = "^(1000|[1-9]\\d{0,2}|0)$\n", message = "Shots taken must be between 0 and 1000")
-        int shotsTaken,
+        @Min(value = 1, message = "Shots taken must be at least 1")
+        @Max(value = 1000, message = "Shots taken must be at most 1000")
+        Integer shotsTaken,
 
         @NotNull(message = "Shots made cannot be null")
-        @Pattern(regexp = "^(1000|[1-9]\\d{0,2}|0)$\n", message = "Shots made must be between 0 and 1000")
-        int shotsMade,
+        @Min(value = 0, message = "Shots made must be at least 0")
+        @Max(value = 1000, message = "Shots made must be at most 1000")
+        Integer shotsMade,
 
+        @Size(max = 255, message = "Notes must be at most 255 characters")
         String notes,
         Instant timestamp
 ) {

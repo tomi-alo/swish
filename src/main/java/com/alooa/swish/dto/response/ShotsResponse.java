@@ -12,6 +12,7 @@ public record ShotsResponse(
         int shotsTaken,
         int shotsMade,
         double shootingPercentage,
+        String assessment,
         String notes,
         Instant timestamp
 ) {
