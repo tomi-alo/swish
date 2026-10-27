@@ -5,10 +5,13 @@ import com.alooa.swish.dto.response.ShotsResponse;
 import com.alooa.swish.model.Category;
 import com.alooa.swish.model.Location;
 import com.alooa.swish.model.Shots;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 
+@Component
 public class ShotsMapper {
     public Shots toEntity(CreateShotsRequest request) {
         Category category = Category.valueOf(request.category().toUpperCase());
@@ -29,7 +32,9 @@ public class ShotsMapper {
     }
 
     public ShotsResponse toResponse(Shots shots) {
-        BigDecimal shootingPercentage = BigDecimal.valueOf(shots.getShootingPercentage()).setScale(2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal shootingPercentage = BigDecimal.valueOf(shots.getShootingPercentage())
+                .setScale(2, RoundingMode.HALF_UP);
+        ;
         return new ShotsResponse(
                 shots.getId(),
                 shots.getCategory(),

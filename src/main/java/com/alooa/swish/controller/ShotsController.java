@@ -27,25 +27,25 @@ public class ShotsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShotsResponse> getShotById(Long id) {
+    public ResponseEntity<ShotsResponse> getShotById(@PathVariable Long id) {
         ShotsResponse shot = shotsService.findById(id);
         return ResponseEntity.ok(shot);
     }
 
     @PostMapping
-    public ResponseEntity<ShotsResponse> createShot(@Valid @RequestBody CreateShotsRequest request) {
+    public ResponseEntity<ShotsResponse> createShots(@Valid @RequestBody CreateShotsRequest request) {
         ShotsResponse createdShot = shotsService.createShots(request);
         return ResponseEntity.ok(createdShot);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ShotsResponse> updateShot(@PathVariable Long id, @Valid @RequestBody UpdateShotsRequest request) {
+    public ResponseEntity<ShotsResponse> updateShots(@PathVariable Long id, @Valid @RequestBody UpdateShotsRequest request) {
         ShotsResponse updatedShot = shotsService.updateShots(id, request);
         return ResponseEntity.ok(updatedShot);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteShot(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteShots(@PathVariable Long id) {
         shotsService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
