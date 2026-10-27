@@ -8,9 +8,12 @@ import com.alooa.swish.model.Location;
 import com.alooa.swish.model.Shots;
 import com.alooa.swish.mapper.ShotsMapper;
 import com.alooa.swish.repository.ShotsRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ShotsServiceImpl implements ShotsService {
 
     private final ShotsRepository shotsRepository;
