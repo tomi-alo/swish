@@ -14,8 +14,8 @@ import java.time.Instant;
 @Component
 public class ShotsMapper {
     public Shots toEntity(CreateShotsRequest request) {
-        Category category = Category.valueOf(request.category().toUpperCase());
-        Location location = Location.valueOf(request.location().toUpperCase());
+        Category category = Category.fromString(request.category());
+        Location location = Location.fromString(request.location());
         Integer shotsMade = request.shotsMade();
         Integer shotsTaken = request.shotsTaken();
 

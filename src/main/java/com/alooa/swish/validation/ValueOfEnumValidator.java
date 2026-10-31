@@ -22,6 +22,13 @@ public class ValueOfEnumValidator implements ConstraintValidator<ValueOfEnum, St
         if (value == null){
             return true;
         }
-        return acceptedValues.contains(value);
+
+        String trimmedValue = value.trim();
+        for (String acceptedValue : acceptedValues) {
+            if (acceptedValue.equalsIgnoreCase(trimmedValue)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

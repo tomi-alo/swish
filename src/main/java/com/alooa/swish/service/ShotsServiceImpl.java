@@ -49,10 +49,10 @@ public class ShotsServiceImpl implements ShotsService {
         Shots shots = shotsRepository.findById(id).orElseThrow(() -> new ShotsNotFoundException(id));
 
         if (request.category() != null) {
-            shots.setCategory(Category.valueOf(request.category()));
+            shots.setCategory(Category.fromString(request.category()));
         }
         if (request.location() != null) {
-            shots.setLocation(Location.valueOf(request.location()));
+            shots.setLocation(Location.fromString(request.location()));
         }
         if (request.shotsTaken() != null) {
             shots.setShotsTaken(request.shotsTaken());
