@@ -28,6 +28,10 @@ Base path: `/swish/api/v1/shots` (GET all, GET by id, POST, PATCH, DELETE).
   - NoResourceFoundException → 404, HttpRequestMethodNotSupportedException → 405
   - Exception (catch-all) → 500 with a generic message; real error logged via SLF4J
   - A client mistake that shows up as a 500 in the logs = a missing handler.
+- **Enum input is lenient:** category/location accept any case and surrounding spaces.
+  The rule (trim + `equalsIgnoreCase`, no `toUpperCase`, which is locale-dependent) lives in
+  `Category.fromString` / `Location.fromString`, used by the mapper and service.
+  `ValueOfEnumValidator` follows the same rule; keep the two in sync.
 - **Deployment plan:** build locally with Docker Compose first, deploy to AWS around
   mid-December 2026.
   - EC2 (1 GB) runs two containers: Swish (`mem_limit: 450m`, `-XX:MaxRAMPercentage=75`,
@@ -50,9 +54,8 @@ Exception handler written and compiling; not tested yet.
    request gets 401. Add a config class (permit all for now; real auth comes later).
 2. **Manually test the exception handler.** Send bad requests, watch for 500s.
    Try `Content-Type: text/plain` on POST; it should reveal a missing handler (415).
-3. **Enum casing bug:** `ShotsMapper.toEntity` uppercases, but `ValueOfEnumValidator`
-   and `ShotsServiceImpl.updateShots` don't. Lowercase category/location in PATCH makes
-   `Category.valueOf` throw → 500. Fix in the service, not the handler.
+3. ~~Enum casing bug~~ (done 2026-10-31, see "Decisions made"). Not yet tested with a
+   real request or a unit test.
 4. POST returns 200; should return 201 Created + a Location header.
 5. DELETE on a missing id silently succeeds (GET throws 404). Decide the behavior.
 6. Cleanups: unused imports (`HttpResponse` in the controller, `Bean` in the service
