@@ -54,8 +54,8 @@ Exception handler written and compiling; not tested yet.
    request gets 401. Add a config class (permit all for now; real auth comes later).
 2. **Manually test the exception handler.** Send bad requests, watch for 500s.
    Try `Content-Type: text/plain` on POST; it should reveal a missing handler (415).
-3. ~~Enum casing bug~~ (done 2026-10-31, see "Decisions made"). Not yet tested with a
-   real request or a unit test.
+3. ~~Enum casing bug~~ (done 2026-10-31, see "Decisions made"). Unit tested
+   (`CategoryTest`, `LocationTest`); not yet tested with a real request.
 4. POST returns 200; should return 201 Created + a Location header.
 5. DELETE on a missing id silently succeeds (GET throws 404). Decide the behavior.
 6. Cleanups: unused imports (`HttpResponse` in the controller, `Bean` in the service
