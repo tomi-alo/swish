@@ -32,6 +32,9 @@ Base path: `/swish/api/v1/shots` (GET all, GET by id, POST, PATCH, DELETE).
   The rule (trim + `equalsIgnoreCase`, no `toUpperCase`, which is locale-dependent) lives in
   `Category.fromString` / `Location.fromString`, used by the mapper and service.
   `ValueOfEnumValidator` follows the same rule; keep the two in sync.
+- **Security (for now):** `config/SecurityConfig.java`. CSRF disabled (stateless API, no
+  cookie login). GET is public; POST/PATCH/DELETE need HTTP Basic with one user. Later, at
+  the "auth" step, replace Basic with JWT (or OAuth2 via e.g. Cognito) to learn it.
 - **Deployment plan:** build locally with Docker Compose first, deploy to AWS around
   mid-December 2026.
   - EC2 (1 GB) runs two containers: Swish (`mem_limit: 450m`, `-XX:MaxRAMPercentage=75`,
@@ -46,16 +49,23 @@ Base path: `/swish/api/v1/shots` (GET all, GET by id, POST, PATCH, DELETE).
 - Gateway: AWS API Gateway vs an nginx container
 - Custom domain vs the default AWS URL
 
-## Current status (2026-10-30)
-Exception handler written and compiling; not tested yet.
+## Current status (2026-11-01)
+Spring Security done and tested in Postman (see "Decisions made"). Exception handler
+written but not systematically tested. Local runs need env vars `SWISH_SECURITY_USERNAME`,
+`SWISH_SECURITY_PASSWORD`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`
+(no defaults; the app won't start without them).
+
+Known gotcha: a request carrying WRONG Basic credentials gets 401 even on a public GET
+(the login filter runs before the rules). Postman: use "No Auth" for public requests.
+Java 26 in-process javac can crash with `"this.hashes" is null`, which hides real
+compile errors; run `mvnw compile -Dmaven.compiler.fork=true` to see the real error.
 
 ## Next steps, in order
-1. **Spring Security:** the starter is on the classpath with no config, so every
-   request gets 401. Add a config class (permit all for now; real auth comes later).
+1. ~~Spring Security~~ (done 2026-11-01).
 2. **Manually test the exception handler.** Send bad requests, watch for 500s.
    Try `Content-Type: text/plain` on POST; it should reveal a missing handler (415).
 3. ~~Enum casing bug~~ (done 2026-10-31, see "Decisions made"). Unit tested
-   (`CategoryTest`, `LocationTest`); not yet tested with a real request.
+   (`CategoryTest`, `LocationTest`) and confirmed with real requests.
 4. POST returns 200; should return 201 Created + a Location header.
 5. DELETE on a missing id silently succeeds (GET throws 404). Decide the behavior.
 6. Cleanups: unused imports (`HttpResponse` in the controller, `Bean` in the service
