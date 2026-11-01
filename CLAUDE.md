@@ -5,14 +5,28 @@ Java 21, Spring Boot 4.1, Spring Data JPA, PostgreSQL, Bean Validation, Actuator
 Base path: `/swish/api/v1/shots` (GET all, GET by id, POST, PATCH, DELETE).
 
 ## Start of every session
-- Before starting work, briefly summarize "Current status" and "Next steps" below
-  and ask the user to confirm. Plans may have changed since this file was written
-  (the user works across two machines).
+1. **Quiz first** (before the status summary, which would give answers away):
+   - Read recent history: `git log -8 --stat`, plus diffs of the code commits
+     (skip notes-only commits like "Update project notes").
+   - Ask 3–5 questions one at a time, in chat. Focus on *why* and concepts, not syntax.
+     Include topics from "Concepts to revisit" below.
+   - After each answer: what's right, what's missing, a plain-words correction.
+   - Keep it to ~5 minutes. The user can say "skip".
+2. Then briefly summarize "Current status" and "Next steps" below and ask the user to
+   confirm. Plans may have changed since this file was written (the user works across
+   two machines).
 - When a decision is made or a step is finished, update this file so it doesn't go stale.
+  You may commit changes to this file, but only after the user says go ahead.
+
+## Concepts to revisit
+Add a topic when a quiz answer shows a gap; remove it once answered well.
+- Hashing vs encoding (`encoder.encode()` actually hashes; Base64 is reversible encoding)
+- JWT and HTTPS are separate layers (HTTPS = the tunnel; Basic/JWT = what goes inside)
 
 ## How to work in this repo
 - The developer is learning and writes the code themselves. Guide with hints and
   small steps, then review. Don't write large chunks of code unasked.
+- After each major step: give a recap with questions, after testing and before committing.
 - Build: `./mvnw compile` (on Windows use `.\mvnw.cmd`). Tests: `./mvnw test`.
 
 ## Decisions made
