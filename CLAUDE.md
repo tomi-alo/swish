@@ -43,8 +43,8 @@ Read it at the start of every session and keep progress there, not here.
   the "auth" step, replace Basic with JWT (or OAuth2 via e.g. Cognito) to learn it.
   - Gotcha: a request carrying WRONG Basic credentials gets 401 even on a public GET
     (the login filter runs before the rules). Postman: use "No Auth" for public requests.
-- **Deployment plan:** build locally with Docker Compose first, deploy to AWS around
-  mid-December 2026.
+- **Deployment plan:** build locally with Docker Compose first. Live on AWS by Dec 6, 2026;
+  everything done by Dec 20, 2026.
   - EC2 (1 GB) runs two containers: Swish (`mem_limit: 450m`, `-XX:MaxRAMPercentage=75`,
     Tomcat threads ~50, Hikari pool ~5) and Redis (`mem_limit: 64m`, `maxmemory 48mb`,
     `allkeys-lru`). Add a 1–2 GB swap file; tune with `docker stats`.
