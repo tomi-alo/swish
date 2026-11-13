@@ -6,10 +6,11 @@ import com.alooa.swish.dto.response.ShotsResponse;
 import com.alooa.swish.service.ShotsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpResponse;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,9 +36,13 @@ public class ShotsController {
 
     @SecurityRequirement(name = "basicAuth")
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ShotsResponse> createShots(@Valid @RequestBody CreateShotsRequest request) {
         ShotsResponse createdShot = shotsService.createShots(request);
-        return ResponseEntity.ok(createdShot);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(createdShot.id())
+                .toUri();
+        return ResponseEntity.created(location).body(createdShot);
     }
 
     @SecurityRequirement(name = "basicAuth")
