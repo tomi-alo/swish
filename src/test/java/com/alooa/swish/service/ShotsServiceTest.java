@@ -41,7 +41,7 @@ class ShotsServiceTest {
     }
 
     @Test
-    void ServiceShouldFindShots() {
+    void serviceShouldFindShots() {
         when(shotsRepository.findById(1L)).thenReturn(Optional.of(shots1));
         ShotsResponse foundShot = shotsService.findById(1L);
         assertEquals(shots1.getCategory(), foundShot.category());
@@ -53,20 +53,20 @@ class ShotsServiceTest {
     }
 
     @Test
-    void ServiceShouldNotFindShots() {
+    void serviceShouldNotFindShots() {
         when(shotsRepository.findById(3L)).thenReturn(Optional.empty());
         ShotsNotFoundException ex = assertThrows(ShotsNotFoundException.class, () -> shotsService.findById(3L));
         assertEquals("Shots with id 3 not found", ex.getMessage());
     }
 
     @Test
-    void ServiceShouldDeleteShots() {
+    void serviceShouldDeleteShots() {
         shotsService.deleteById(5L);
         verify(shotsRepository).deleteById(5L);
     }
 
     @Test
-    void ServiceShouldCreateShots(){
+    void serviceShouldCreateShots(){
         CreateShotsRequest request = new CreateShotsRequest("MIDDY", "RIGHT_WING", 10, 7, "No notes", null);
         when(shotsRepository.save(any(Shots.class))).thenReturn(shots1);
         ShotsResponse response = shotsService.createShots(request);
@@ -78,7 +78,7 @@ class ShotsServiceTest {
     }
 
     @Test
-    void ServiceShouldNotCreateInvalidShots() {
+    void serviceShouldNotCreateInvalidShots() {
         CreateShotsRequest request = new CreateShotsRequest("MIDDY", "RIGHT_WING", 10, 15, "No notes", null);
         InvalidShotsException ex = assertThrows(InvalidShotsException.class, () -> shotsService.createShots(request));
         assertEquals("Shots made cannot be greater than shots taken", ex.getMessage());
@@ -86,7 +86,7 @@ class ShotsServiceTest {
     }
 
     @Test
-    void ServiceShouldFindAllShots() {
+    void serviceShouldFindAllShots() {
         when(shotsRepository.findAll()).thenReturn(List.of(shots1, shots2));
         var responseList = shotsService.findAll();
         assertEquals(2, responseList.size());
@@ -95,7 +95,7 @@ class ShotsServiceTest {
     }
 
     @Test
-    void ServiceShouldUpdateShots() {
+    void serviceShouldUpdateShots() {
         // Arrange: shots1 is MIDDY, LEFT_WING, 10 taken, 7 made
         when(shotsRepository.findById(1L)).thenReturn(Optional.of(shots1));
         when(shotsRepository.save(any(Shots.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -113,7 +113,7 @@ class ShotsServiceTest {
     }
 
     @Test
-    void ServiceShouldNotUpdateNonexistentShots() {
+    void serviceShouldNotUpdateNonexistentShots() {
         when(shotsRepository.findById(3L)).thenReturn(Optional.empty());
         UpdateShotsRequest request = new UpdateShotsRequest("DUNK", "RIGHT_WING", null, null, null, null);
         ShotsNotFoundException ex = assertThrows(ShotsNotFoundException.class, () -> shotsService.updateShots(3L, request));
@@ -122,7 +122,7 @@ class ShotsServiceTest {
     }
 
     @Test
-    void ServiceShouldNotUpdateInvalidShots() {
+    void serviceShouldNotUpdateInvalidShots() {
         // Arrange: shots1 is MIDDY, LEFT_WING, 10 taken, 7 made
         when(shotsRepository.findById(1L)).thenReturn(Optional.of(shots1));
         UpdateShotsRequest request = new UpdateShotsRequest(null, null, 5, 10, null, null);

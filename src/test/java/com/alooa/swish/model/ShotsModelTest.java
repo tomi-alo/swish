@@ -13,7 +13,7 @@ class ShotsModelTest {
     private final Shots zeroShotsTaken = new Shots(Category.LAYUP, Location.RIGHT_WING, 0, 0, null, null);
 
     @Test
-    void ModelShouldCreateValidShotsObject() {
+    void modelShouldCreateValidShotsObject() {
         assertEquals(Category.MIDDY, validShots.getCategory());
         assertEquals(Location.LEFT_WING, validShots.getLocation());
         assertEquals(10, validShots.getShotsTaken());
@@ -23,7 +23,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldNotThrowExceptionForValidShots() {
+    void modelShouldNotThrowExceptionForValidShots() {
         // Test case for creating a valid Shots object
         assertDoesNotThrow(() -> {
             validShots.checkIfValid();
@@ -31,7 +31,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldNotThrowExceptionForPerfectShots() {
+    void modelShouldNotThrowExceptionForPerfectShots() {
         // Test case for creating a valid Shots object with perfect shooting percentage
         assertDoesNotThrow(() -> {
             perfectShots.checkIfValid();
@@ -39,7 +39,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldThrowExceptionZeroShotsTaken() {
+    void modelShouldThrowExceptionZeroShotsTaken() {
         // Test case for creating an invalid Shots object with zero shots taken
         assertThrows(InvalidShotsException.class, () -> {
             zeroShotsTaken.checkIfValid();
@@ -47,7 +47,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldThrowExceptionNegativeShotsTaken() {
+    void modelShouldThrowExceptionNegativeShotsTaken() {
         // Test case for creating an invalid Shots object with negative shots taken
         assertThrows(InvalidShotsException.class, () -> {
             negativeShotsTaken.checkIfValid();
@@ -55,7 +55,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldThrowExceptionNegativeShotsMade() {
+    void modelShouldThrowExceptionNegativeShotsMade() {
         // Test case for creating an invalid Shots object with negative shots made
         assertThrows(InvalidShotsException.class, () -> {
             negativeShotsMade.checkIfValid();
@@ -63,7 +63,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldThrowExceptionShotsMadeGreaterThanShotsTaken() {
+    void modelShouldThrowExceptionShotsMadeGreaterThanShotsTaken() {
         // Test case for creating an invalid Shots object with shots made greater than shots taken
         assertThrows(InvalidShotsException.class, () -> {
             madeGreaterThanTaken.checkIfValid();
@@ -71,7 +71,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldUpdateValidShotsObjectCorrectly() {
+    void modelShouldUpdateValidShotsObjectCorrectly() {
         // Test case for updating a Shots object with valid values
         validShots.setShotsTaken(15);
         validShots.setShotsMade(10);
@@ -81,7 +81,7 @@ class ShotsModelTest {
     }
 
     @Test
-    void ModelShouldThrowExceptionWhenUpdatingShotsToInvalidValues() {
+    void modelShouldThrowExceptionWhenUpdatingShotsToInvalidValues() {
         // Test case for updating a Shots object with shots made greater than shots taken
         assertThrows(InvalidShotsException.class, () -> {
             validShots.setShotsTaken(5);

@@ -7,21 +7,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CategoryTest {
     @Test
-    void FromStringShouldWorkWithValidInputs() {
+    void fromStringShouldWorkWithValidInputs() {
         assertEquals(Category.FREE_THROW, Category.fromString("FREE_THROW"));
         assertEquals(Category.THREE, Category.fromString("three  "));
         assertEquals(Category.FREE_THROW, Category.fromString("    free_throw"));
     }
 
     @Test
-    void FromStringShouldThrowExceptionForNullInput() {
+    void fromStringShouldThrowExceptionForNullInput() {
         assertThrows(IllegalArgumentException.class, () -> {
             Category.fromString(null);
         });
     }
 
     @Test
-    void FromStringShouldThrowExceptionForEmptyInput() {
+    void fromStringShouldThrowExceptionForEmptyInput() {
         assertThrows(IllegalArgumentException.class, () -> {
             Category.fromString("   ");
         });
@@ -32,7 +32,7 @@ class CategoryTest {
     }
 
     @Test
-    void FromStringShouldThrowExceptionForInvalidInput() {
+    void fromStringShouldThrowExceptionForInvalidInput() {
         assertThrows(IllegalArgumentException.class, () -> {
             Category.fromString("banana");
         });

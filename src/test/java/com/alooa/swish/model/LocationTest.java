@@ -7,21 +7,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LocationTest {
     @Test
-    void FromStringShouldWorkWithValidInputs() {
+    void fromStringShouldWorkWithValidInputs() {
         assertEquals(Location.LEFT_WING, Location.fromString("LEFT_WING"));
         assertEquals(Location.RIGHT_WING, Location.fromString("right_wing  "));
         assertEquals(Location.LEFT_CORNER, Location.fromString("    left_corner"));
     }
 
     @Test
-    void FromStringShouldThrowExceptionForNullInput() {
+    void fromStringShouldThrowExceptionForNullInput() {
         assertThrows(IllegalArgumentException.class, () -> {
             Location.fromString(null);
         });
     }
 
     @Test
-    void FromStringShouldThrowExceptionForEmptyInput() {
+    void fromStringShouldThrowExceptionForEmptyInput() {
         assertThrows(IllegalArgumentException.class, () -> {
             Location.fromString("   ");
         });
@@ -32,7 +32,7 @@ class LocationTest {
     }
 
     @Test
-    void FromStringShouldThrowExceptionForInvalidInput() {
+    void fromStringShouldThrowExceptionForInvalidInput() {
         assertThrows(IllegalArgumentException.class, () -> {
             Location.fromString("banana");
         });
