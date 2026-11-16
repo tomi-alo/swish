@@ -6,7 +6,7 @@ Base path: `/swish/api/v1/shots` (GET all, GET by id, POST, PATCH, DELETE).
 
 ## Progress notes
 The session format (start-of-session quiz, recaps), concepts to revisit, current status
-and next steps live in `OneDrive/claude/swish-progress.md` (synced between PC and laptop).
+and next steps live in `OneDrive/claude/projects/swish/notes.md` (synced between PC and laptop).
 Read it at the start of every session and keep progress there, not here.
 - This file holds stable project facts. When a design decision is made, update
   "Decisions made" below. Commit changes to this file only after the user says go ahead.
