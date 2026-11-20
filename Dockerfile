@@ -11,4 +11,7 @@ RUN mvn package -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 
 COPY --from=build /app/target/swish-0.0.1-SNAPSHOT.jar app.jar
+RUN addgroup -S swish && adduser -S swish -G swish
+USER swish
+
 ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "app.jar"]
