@@ -1,0 +1,3 @@
+swish-alooa.duckdns.org {
+	reverse_proxy swish:8080
+}
