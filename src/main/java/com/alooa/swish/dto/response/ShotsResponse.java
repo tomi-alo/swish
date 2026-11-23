@@ -3,6 +3,7 @@ package com.alooa.swish.dto.response;
 import com.alooa.swish.model.Category;
 import com.alooa.swish.model.Location;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -16,5 +17,5 @@ public record ShotsResponse(
         String assessment,
         String notes,
         Instant timestamp
-) {
+) implements Serializable {
 }

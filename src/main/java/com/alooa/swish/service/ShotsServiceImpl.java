@@ -8,7 +8,9 @@ import com.alooa.swish.model.Location;
 import com.alooa.swish.model.Shots;
 import com.alooa.swish.mapper.ShotsMapper;
 import com.alooa.swish.repository.ShotsRepository;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class ShotsServiceImpl implements ShotsService {
     }
 
     @Override
+    @Cacheable(cacheNames = "shots", key = "#id")
     public ShotsResponse findById(Long id) {
         return shotsRepository.findById(id).map(shotsMapper::toResponse).orElseThrow(() -> new ShotsNotFoundException(id));
     }
@@ -40,11 +43,13 @@ public class ShotsServiceImpl implements ShotsService {
         return shotsMapper.toResponse(savedShots);
     }
     @Override
+    @CacheEvict(cacheNames = "shots", key = "#id")
     public void deleteById(Long id) {
         shotsRepository.deleteById(id);
     }
 
     @Override
+    @CachePut(cacheNames = "shots", key = "#id")
     public ShotsResponse updateShots(Long id, UpdateShotsRequest request) {
         Shots shots = shotsRepository.findById(id).orElseThrow(() -> new ShotsNotFoundException(id));
 

@@ -13,6 +13,11 @@ services:
       timeout: 3s
       retries: 10
 
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--maxmemory", "48mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]
+    mem_limit: 64m
+
   swish:
     build: .
     environment:
@@ -21,10 +26,13 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SWISH_SECURITY_USERNAME: ${SWISH_SECURITY_USERNAME}
       SWISH_SECURITY_PASSWORD: ${SWISH_SECURITY_PASSWORD}
+      REDIS_HOST: redis
 
     depends_on:
       postgres:
         condition: service_healthy
+      redis:
+        condition: service_started
 
     ports:
       - "8080:8080"

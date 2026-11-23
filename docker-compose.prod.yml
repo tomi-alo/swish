@@ -7,6 +7,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SWISH_SECURITY_USERNAME: ${SWISH_SECURITY_USERNAME}
       SWISH_SECURITY_PASSWORD: ${SWISH_SECURITY_PASSWORD}
+      REDIS_HOST: redis
+    depends_on:
+      - redis
     restart: unless-stopped
     mem_limit: 450m
     healthcheck:
@@ -15,6 +18,17 @@ services:
       timeout: 5s
       retries: 3
       start_period: 90s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--maxmemory", "48mb", "--maxmemory-policy", "allkeys-lru", "--save", "", "--appendonly", "no"]
+    restart: unless-stopped
+    mem_limit: 64m
     logging:
       driver: json-file
       options:
